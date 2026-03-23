@@ -1,0 +1,12 @@
+[config]
+
+name="AdMobAds"
+binary_type="local"
+binary_debug="poing-godot-admob-ads-debug.aar"
+binary_release="poing-godot-admob-ads-release.aar"
+
+[dependencies]
+
+local=["poing-godot-admob-core-debug.aar", "poing-godot-admob-core-release.aar"]
+remote=["com.google.android.gms:play-services-ads:23.0.0"]
+custom_maven_repos=[]

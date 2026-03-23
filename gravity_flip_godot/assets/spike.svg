@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <defs>
+    <filter id="glow-spike" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <polygon points="32,8 56,56 8,56" fill="#ff00ff" stroke="#ffffff" stroke-width="2" filter="url(#glow-spike)"/>
+  <polygon points="32,20 48,50 16,50" fill="#ffccff" opacity="0.6"/>
+</svg>

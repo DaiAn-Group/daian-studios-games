@@ -1,0 +1,100 @@
+[gd_scene format=3 uid="uid://main12345"]
+
+[ext_resource type="Script" uid="uid://mvmhgewl1glr" path="res://scripts/Main.gd" id="1_main"]
+[ext_resource type="PackedScene" uid="uid://player12345" path="res://scenes/Player.tscn" id="2_player"]
+[ext_resource type="PackedScene" uid="uid://spike12345" path="res://scenes/Obstacle.tscn" id="3_obstacle"]
+[ext_resource type="Script" uid="uid://d2g2qrulc7ol8" path="res://scripts/Spawner.gd" id="4_spawner"]
+[ext_resource type="Texture2D" uid="uid://c3kfbvc4c8q7a" path="res://assets/background.svg" id="5_bg"]
+[ext_resource type="Texture2D" uid="uid://dfglrmpwci4by" path="res://assets/floor.svg" id="6_floor"]
+
+[node name="Main" type="Node2D" unique_id=1927705072]
+script = ExtResource("1_main")
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="." unique_id=1682097345]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground" unique_id=1160436808]
+motion_mirroring = Vector2(720, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer" unique_id=722045255]
+position = Vector2(360, 640)
+scale = Vector2(1.5, 2.5)
+texture = ExtResource("5_bg")
+
+[node name="Player" parent="." unique_id=1732092297 instance=ExtResource("2_player")]
+position = Vector2(128, 640)
+
+[node name="FloorTop" type="StaticBody2D" parent="." unique_id=1315771362]
+position = Vector2(360, 16)
+
+[node name="Sprite2D" type="Sprite2D" parent="FloorTop" unique_id=419909153]
+scale = Vector2(11.25, 0.5)
+texture = ExtResource("6_floor")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="FloorTop" unique_id=2107739531]
+polygon = PackedVector2Array(-360, -16, 360, -16, 360, 16, -360, 16)
+
+[node name="FloorBottom" type="StaticBody2D" parent="." unique_id=1424626008]
+position = Vector2(360, 1264)
+
+[node name="Sprite2D" type="Sprite2D" parent="FloorBottom" unique_id=1989028120]
+scale = Vector2(11.25, 0.5)
+texture = ExtResource("6_floor")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="FloorBottom" unique_id=826988356]
+polygon = PackedVector2Array(-360, -16, 360, -16, 360, 16, -360, 16)
+
+[node name="Spawner" type="Node2D" parent="." unique_id=316696534]
+script = ExtResource("4_spawner")
+obstacle_scene = ExtResource("3_obstacle")
+
+[node name="Timer" type="Timer" parent="Spawner" unique_id=1757242524]
+wait_time = 1.5
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=925703066]
+
+[node name="ScoreLabel" type="Label" parent="CanvasLayer" unique_id=1204223891]
+offset_left = 20.0
+offset_top = 40.0
+offset_right = 200.0
+offset_bottom = 100.0
+theme_override_font_sizes/font_size = 48
+text = "0"
+
+[node name="GameOver" type="Control" parent="CanvasLayer" unique_id=286736705]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/GameOver" unique_id=1211308584]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.784314)
+
+[node name="Label" type="Label" parent="CanvasLayer/GameOver" unique_id=1186032058]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -50.0
+offset_right = 150.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 48
+text = "GAME OVER
+Tap to Retry"
+horizontal_alignment = 1
+
+[connection signal="game_over" from="Player" to="." method="_on_player_game_over"]
+[connection signal="timeout" from="Spawner/Timer" to="Spawner" method="_on_timer_timeout"]
